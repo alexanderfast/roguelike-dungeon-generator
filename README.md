@@ -70,4 +70,4 @@ Example output
 Credits
 =======
 
-Created as I reworded [this algorithm](http://kuoi.org/~kamikaze/GameDesign/art07_rogue_dungeon.php) to make it easier to follow.
+Created as I reworded [this algorithm](http://kuoi.org/~kamikaze/GameDesign/art07_rogue_dungeon.php) (link is now broken, can't find a mirror) to make it easier to follow.
