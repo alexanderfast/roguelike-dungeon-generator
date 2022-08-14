@@ -1,3 +1,4 @@
+#!/bin/python3
 import random
 import itertools
 import sys
@@ -149,7 +150,7 @@ def generate(cellsX, cellsY, cellSize=5):
 
         corridor = []
         for tile in _AStar(start, end):
-            if tile not in a and not tile in b:
+            if tile not in a and tile not in b:
                 corridor.append(tile)
         rooms.append(corridor)
 
