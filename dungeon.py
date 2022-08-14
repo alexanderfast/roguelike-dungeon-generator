@@ -70,6 +70,9 @@ def generate(cellsX, cellsY, cellSize=5):
             self.connected = True
             other.connected = True
 
+        def __str__(self):
+            return "(%i,%i)" % (self.x, self.y)
+
     cells = {}
     for y in range(cellsY):
         for x in range(cellsX):
@@ -77,7 +80,7 @@ def generate(cellsX, cellsY, cellSize=5):
             cells[(c.x, c.y)] = c
 
     # 2. Pick a random cell as the current cell and mark it as connected.
-    current = lastCell = firstCell = random.choice(cells.values())
+    current = lastCell = firstCell = random.choice(list(cells.values()))
     current.connected = True
 
     # 3. While the current cell has unconnected neighbor cells:
@@ -89,7 +92,7 @@ def generate(cellsX, cellsY, cellSize=5):
                 continue
 
     while True:
-        unconnected = filter(lambda x: not x.connected, getNeighborCells(current))
+        unconnected = list(filter(lambda x: not x.connected, getNeighborCells(current)))
         if not unconnected:
             break
 
@@ -101,22 +104,27 @@ def generate(cellsX, cellsY, cellSize=5):
         current = lastCell = neighbor
 
     # 4. While there are unconnected cells:
-    while filter(lambda x: not x.connected, cells.values()):
+    while True:
+        unconnected = list(filter(lambda x: not x.connected, cells.values()))
+        if not unconnected:
+            break
+
         # 4a. Pick a random connected cell with unconnected neighbors and connect to one of them.
         candidates = []
         for cell in filter(lambda x: x.connected, cells.values()):
-            neighbors = filter(lambda x: not x.connected, getNeighborCells(cell))
+            neighbors = list(filter(lambda x: not x.connected, getNeighborCells(cell)))
             if not neighbors:
                 continue
             candidates.append((cell, neighbors))
-        cell, neighbors = random.choice(candidates)
-        cell.connect(random.choice(neighbors))
+        if candidates:
+            cell, neighbors = random.choice(candidates)
+            cell.connect(random.choice(neighbors))
 
     # 5. Pick 0 or more pairs of adjacent cells that are not connected and connect them.
-    extraConnections = random.randint((cellsX + cellsY) / 4, int((cellsX + cellsY) / 1.2))
+    extraConnections = random.randint(int((cellsX + cellsY) / 4), int((cellsX + cellsY) / 1.2))
     maxRetries = 10
     while extraConnections > 0 and maxRetries > 0:
-        cell = random.choice(cells.values())
+        cell = random.choice(list(cells.values()))
         neighbor = random.choice(list(getNeighborCells(cell)))
         if cell in neighbor.connectedTo:
             maxRetries -= 1
@@ -179,7 +187,7 @@ def generate(cellsX, cellsY, cellSize=5):
             except KeyError:
                 continue
 
-    for xy, tile in tiles.iteritems():
+    for xy, tile in tiles.items():
         if not tile == "." and "." in getNeighborTiles(xy):
             tiles[xy] = "#"
     tiles[stairsUp] = "<"
