@@ -12,14 +12,14 @@ Outline
 1. Divide the map into a grid of evenly sized cells.
 2. Pick a random cell as the current cell and mark it as connected.
 3. While the current cell has unconnected neighbor cells:
-    3. Connect to one of them.
-    3. Make that cell the current cell.
+    1. Connect to one of them.
+    2. Make that cell the current cell.
 4. While there are unconnected cells:
-    4. Pick a random connected cell with unconnected neighbors and connect to one of them.
+    1. Pick a random connected cell with unconnected neighbors and connect to one of them.
 5. Pick zero or more pairs of adjacent cells that are not connected and connect them.
 6. Within each cell, create a room of random shape.
 7. For each connection between two cells:
-    7. Create a random corridor between the rooms in each cell.
+    1. Create a random corridor between the rooms in each cell.
 8. Place staircases in the cell picked in step 2 and the lest cell visited in step 3ii.
 
 
